@@ -5,8 +5,8 @@
             "name":                 "centos8",
 
             "vcenter_server":       "ukw-p-vcs-01.v12n.io",
-            "username":             "V12N/autoug",
-            "password":             "PSych01!",
+            "username":             "administrator@vsphere.local",
+            "password":             "",
             "insecure_connection":  true,
   
             "datacenter":           "ukw01",
@@ -17,8 +17,8 @@
   
             "vm_name":              "autoug_demo01",
             "guest_os_type":        "centos8_64Guest",
-            "CPUs":                 1,
-            "RAM":                  1024,
+            "CPUs":                 2,
+            "RAM":                  2048,
             "disk_controller_type": "pvscsi",
             "storage": [
                 {
