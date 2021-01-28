@@ -5,7 +5,7 @@
             "name":                 "centos8",
 
             "vcenter_server":       "ukw-p-vcs-01.v12n.io",
-            "username":             "autoug@v12n.io",
+            "username":             "V12N/autoug",
             "password":             "PSych01!",
             "insecure_connection":  true,
   
