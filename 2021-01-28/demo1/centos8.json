@@ -1,0 +1,44 @@
+{
+    "builders": [
+        {
+            "type":                 "vsphere-iso",
+            "name":                 "centos8",
+
+            "vcenter_server":       "ukw-p-vcs-01.v12n.io",
+            "username":             "autoug@v12n.io",
+            "password":             "VMware1!",
+            "insecure_connection":  true,
+  
+            "datacenter":           "ukw01",
+            "cluster":              "ukw01-cls01",
+            "folder":               "Temp",
+            "datastore":            "ukw-p-syn-01_ds02",
+            "convert_to_template":  true,
+  
+            "vm_name":              "autoug_demo01",
+            "guest_os_type":        "centos8_64Guest",
+            "CPUs":                 1,
+            "RAM":                  1024,
+            "disk_controller_type": "pvscsi",
+            "storage": [
+                {
+                    "disk_size":                16384,
+                    "disk_thin_provisioned":    true
+                }
+            ],
+            "network_adapters": [
+                {
+                    "network":                  "ukw-172.25.1.0_24",
+                    "network_card":             "vmxnet3"
+                }
+            ],
+  
+            "communicator":         "ssh",
+            "ssh_username":         "root",
+            "ssh_password":         "VMware1!",
+  
+            "iso_paths":            ["[ukw-p-qnp-0001_iso] os/centos/8/CentOS-8.3.2011-x86_64-dvd1.iso"],
+            "boot_command":         ["<up><wait><tab><wait> text ks=http://172.25.1.7/demo1/centos8.cfg<enter><wait>"]
+        }
+    ]
+}
