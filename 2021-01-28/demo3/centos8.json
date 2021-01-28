@@ -1,9 +1,9 @@
 {   
     "variables": {
-        "vcenter_folder":       "Templates/CentOS8",
+        "vcenter_folder":       "Temp",
         "iso_path":             "os/centos/8",
         "iso_file":             "CentOS-8.3.2011-x86_64-dvd1.iso",
-        "http_server":          "http://172.25.1.7/demo2",
+        "http_server":          "http://172.25.1.7/demo3",
         "guest_username":       "{{env `LINUXUSER`}}",
         "guest_password":       "{{env `LINUXPASS`}}",
         "guest_type":           "centos8_64Guest",
@@ -33,7 +33,7 @@
             "datastore":            "{{user `vcenter_datastore`}}",
             "convert_to_template":  true,
   
-            "vm_name":              "centos8_{{user `build_version`}}",
+            "vm_name":              "autoug-demo03",
             "guest_os_type":        "{{user `guest_type`}}",
             "CPUs":                 "{{user `cpu_count`}}",
             "RAM":                  "{{user `mem_count`}}",
