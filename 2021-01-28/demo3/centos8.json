@@ -1,0 +1,70 @@
+{   
+    "variables": {
+        "vcenter_folder":       "Templates/CentOS8",
+        "iso_path":             "os/centos/8",
+        "iso_file":             "CentOS-8.3.2011-x86_64-dvd1.iso",
+        "http_server":          "http://172.25.1.7/demo2",
+        "guest_username":       "{{env `LINUXUSER`}}",
+        "guest_password":       "{{env `LINUXPASS`}}",
+        "guest_type":           "centos8_64Guest",
+        "cpu_count":            "1",
+        "mem_count":            "1024",
+        "disk_size":            "16384",
+        "disk_thin":            "true",
+        "disk_controller":      "pvscsi",
+        "network_card":         "vmxnet3",
+        "config_file":          "centos8.cfg",
+        "script_files":         "05-repos.sh,10-configure-sshd.sh,80-cloudinit.sh,95-motd.sh,99-cleanup.sh"
+    },
+
+    "builders": [
+        {
+            "type":                 "vsphere-iso",
+            "name":                 "centos8",
+
+            "vcenter_server":       "{{user `vcenter_server`}}",
+            "username":             "{{user `vcenter_username`}}",
+            "password":             "{{user `vcenter_password`}}",
+            "insecure_connection":  true,
+  
+            "datacenter":           "{{user `vcenter_datacenter`}}",
+            "cluster":              "{{user `vcenter_cluster`}}",
+            "folder":               "{{user `vcenter_folder`}}",
+            "datastore":            "{{user `vcenter_datastore`}}",
+            "convert_to_template":  true,
+  
+            "vm_name":              "centos8_{{user `build_version`}}",
+            "guest_os_type":        "{{user `guest_type`}}",
+            "CPUs":                 "{{user `cpu_count`}}",
+            "RAM":                  "{{user `mem_count`}}",
+            "disk_controller_type": "{{user `disk_controller`}}",
+            "storage": [
+                {
+                    "disk_size":                "{{user `disk_size`}}",
+                    "disk_thin_provisioned":    "{{user `disk_thin`}}"
+                }
+            ],
+            "network_adapters": [
+                {
+                    "network":                  "{{user `vcenter_network`}}",
+                    "network_card":             "{{user `network_card`}}"
+                }
+            ],
+  
+            "communicator":         "ssh",
+            "ssh_username":         "{{user `guest_username`}}",
+            "ssh_password":         "{{user `guest_password`}}",
+  
+            "iso_paths":            ["[{{user `vcenter_isods`}}] {{user `iso_path`}}/{{user `iso_file`}}"],
+            "boot_command":         ["<up><wait><tab><wait> text ks={{user `http_server`}}/{{user `config_file`}}<enter><wait>"]
+        }
+    ],
+
+    "provisioners": [
+        {
+            "type":                 "shell",
+            "execute_command":      "echo '{{user `guest_password`}}' | sudo -S -E {{ .Path }}",
+            "scripts":              "{{user `script_files`}}"
+        }
+    ]
+}
